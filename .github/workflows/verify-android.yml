@@ -18,7 +18,7 @@ concurrency:
 jobs:
   android-release:
     if: github.event.repository.private == false
-    runs-on: ubuntu-24.04
+    runs-on: ubuntu-26.04
     timeout-minutes: 90
     steps:
       - name: Checkout candidate
@@ -136,9 +136,6 @@ jobs:
         env:
           GOOGLE_SERVICES_JSON: ${{ secrets.GOOGLE_SERVICES_JSON }}
           KEYSTORE_BASE64: ${{ secrets.KEYSTORE_BASE64 }}
-          RN_UPLOAD_STORE_PASSWORD: ${{ secrets.RN_UPLOAD_STORE_PASSWORD }}
-          RN_UPLOAD_KEY_ALIAS: ${{ secrets.RN_UPLOAD_KEY_ALIAS }}
-          RN_UPLOAD_KEY_PASSWORD: ${{ secrets.RN_UPLOAD_KEY_PASSWORD }}
           API_BASE_URL: ${{ secrets.API_BASE_URL }}
           ANDROID_HOME_BANNER_AD_UNIT_ID: ${{ secrets.ANDROID_HOME_BANNER_AD_UNIT_ID }}
           ANDROID_NOTI_BANNER_AD_UNIT_ID: ${{ secrets.ANDROID_NOTI_BANNER_AD_UNIT_ID }}
@@ -169,9 +166,6 @@ jobs:
           fs.writeFileSync('.env', names.map(name => `${name}=${quote(process.env[name] ?? '')}`).join('\n') + '\n', { mode: 0o600 });
           NODE
           echo "RN_UPLOAD_STORE_FILE=$RUNNER_TEMP/slunchv2-release.keystore" >> "$GITHUB_ENV"
-          echo "RN_UPLOAD_STORE_PASSWORD=$RN_UPLOAD_STORE_PASSWORD" >> "$GITHUB_ENV"
-          echo "RN_UPLOAD_KEY_ALIAS=$RN_UPLOAD_KEY_ALIAS" >> "$GITHUB_ENV"
-          echo "RN_UPLOAD_KEY_PASSWORD=$RN_UPLOAD_KEY_PASSWORD" >> "$GITHUB_ENV"
           echo "SENTRY_DISABLE_AUTO_UPLOAD=true" >> "$GITHUB_ENV"
           echo "SENTRY_DISABLE_NATIVE_DEBUG_UPLOAD=true" >> "$GITHUB_ENV"
 
@@ -200,6 +194,10 @@ jobs:
         id: gradle
         shell: bash
         env:
+          RN_UPLOAD_STORE_FILE: ${{ runner.temp }}/slunchv2-release.keystore
+          RN_UPLOAD_STORE_PASSWORD: ${{ secrets.RN_UPLOAD_STORE_PASSWORD }}
+          RN_UPLOAD_KEY_ALIAS: ${{ secrets.RN_UPLOAD_KEY_ALIAS }}
+          RN_UPLOAD_KEY_PASSWORD: ${{ secrets.RN_UPLOAD_KEY_PASSWORD }}
           SENTRY_DISABLE_AUTO_UPLOAD: 'true'
           SENTRY_DISABLE_NATIVE_DEBUG_UPLOAD: 'true'
         run: |
@@ -240,6 +238,7 @@ jobs:
         shell: bash
         run: |
           set +e
+          rm -f .env android/app/google-services.json "$RUNNER_TEMP/slunchv2-release.keystore"
           {
             echo "### Android build outcome"
             echo "Gradle step outcome: ${{ steps.gradle.outcome }}"
@@ -247,5 +246,3 @@ jobs:
             echo "APK present: $([[ -s android/app/build/outputs/apk/release/app-release.apk ]] && echo yes || echo no)"
             echo "AAB present: $([[ -s android/app/build/outputs/bundle/release/app-release.aab ]] && echo yes || echo no)"
           } >> "$GITHUB_STEP_SUMMARY"
-          if [[ -x android/gradlew ]]; then (cd android && ./gradlew --stop); fi
-          rm -f .env android/app/google-services.json "$RUNNER_TEMP/slunchv2-release.keystore"
