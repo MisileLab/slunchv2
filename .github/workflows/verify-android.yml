@@ -125,12 +125,12 @@ jobs:
         run: |
           set -euo pipefail
           "$SDKMANAGER" --licenses < <(yes)
-          "$SDKMANAGER" 'platforms;android-37' 'build-tools;37.0.0' 'ndk;29.0.13113456' 'platform-tools'
+          "$SDKMANAGER" 'platforms;android-36' 'build-tools;36.0.0' 'ndk;29.0.13113456' 'platform-tools'
       - name: Verify installed apksigner
         shell: bash
         run: |
           set -euo pipefail
-          [[ -x "$ANDROID_HOME/build-tools/37.0.0/apksigner" ]] || { echo "Installed apksigner missing" >&2; exit 1; }
+          [[ -x "$ANDROID_HOME/build-tools/36.0.0/apksigner" ]] || { echo "Installed apksigner missing" >&2; exit 1; }
       - name: Materialize signing and app configuration
         shell: bash
         env:
@@ -222,7 +222,7 @@ jobs:
           assert any(name.startswith('lib/arm64-v8a/') and name.endswith('.so') for name in apk_names), 'APK missing ARM64 native library'
           assert 'base/manifest/AndroidManifest.xml' in aab_names and any(name.startswith('base/lib/arm64-v8a/') and name.endswith('.so') for name in aab_names), 'AAB missing manifest or ARM64 native library'
           PY
-          signer="$ANDROID_HOME/build-tools/37.0.0/apksigner"
+          signer="$ANDROID_HOME/build-tools/36.0.0/apksigner"
           [[ -x "$signer" ]] || signer=$(command -v apksigner)
           "$signer" verify "$apk"
           jarsigner -verify "$aab"
