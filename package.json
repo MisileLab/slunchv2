@@ -17,7 +17,6 @@
     "test": "jest"
   },
   "dependencies": {
-    "@adrianso/react-native-device-brightness": "^1.2.7",
     "@gorhom/bottom-sheet": "^5.2.14",
     "@notifee/react-native": "^9.1.8",
     "@quidone/react-native-wheel-picker": "^1.7.1",
@@ -35,8 +34,10 @@
     "@react-navigation/bottom-tabs": "^7.19.2",
     "@react-navigation/native": "^7.4.1",
     "@react-navigation/stack": "^7.11.2",
+    "@reeq/react-native-device-brightness": "^2.0.2",
     "@sayem314/react-native-keep-awake": "^2.0.0",
     "@sentry/react-native": "^8.28.0",
+    "@zoontek/react-native-navigation-bar": "^2.0.2",
     "axios": "^1.20.0",
     "babel-plugin-module-resolver": "^5.0.3",
     "dayjs": "^1.11.23",
@@ -55,8 +56,6 @@
     "react-native-google-mobile-ads": "^17.1.0",
     "react-native-haptic-feedback": "^3.0.0",
     "react-native-linear-gradient": "^2.8.3",
-    "react-native-midnight": "^1.0.2",
-    "react-native-navigation-bar-color": "^2.0.2",
     "react-native-reanimated": "^4.7.0",
     "react-native-safe-area-context": "^5.10.0",
     "react-native-screens": "^4.28.0",
@@ -103,11 +102,8 @@
     "node": ">=18"
   },
   "patchedDependencies": {
-    "react-native-midnight@1.0.2": "patches/react-native-midnight@1.0.2.patch",
-    "@adrianso/react-native-device-brightness@1.2.7": "patches/@adrianso%2Freact-native-device-brightness@1.2.7.patch",
     "react-native-version-check@3.5.0": "patches/react-native-version-check@3.5.0.patch",
     "react-native-linear-gradient@2.8.3": "patches/react-native-linear-gradient@2.8.3.patch",
-    "react-native-date-picker@5.0.13": "patches/react-native-date-picker@5.0.13.patch",
-    "react-native-navigation-bar-color@2.0.2": "patches/react-native-navigation-bar-color@2.0.2.patch"
+    "react-native-date-picker@5.0.13": "patches/react-native-date-picker@5.0.13.patch"
   }
 }

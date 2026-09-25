@@ -9,7 +9,7 @@ module.exports = {
     '\\.svg$': '<rootDir>/test/fixtures/svg.js',
   },
   transformIgnorePatterns: [
-    'node_modules/(?!((jest-)?react-native(?:-[^/]+)?|@react-native(?:-[^/]+)?|@react-navigation|@notifee|@sentry/react-native|@gorhom|@quidone|@adrianso|@sayem314|nanoid|jsbarcode|react-native-svg)/)',
+    'node_modules/(?!((jest-)?react-native(?:-[^/]+)?|@react-native(?:-[^/]+)?|@react-navigation|@notifee|@sentry/react-native|@gorhom|@quidone|@reeq|@zoontek|@sayem314|nanoid|jsbarcode|react-native-svg)/)',
   ],
   setupFilesAfterEnv: ['<rootDir>/jest.setup.js'],
 };

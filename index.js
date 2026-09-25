@@ -2,7 +2,6 @@ import dayjs from 'dayjs';
 import React, { useEffect } from 'react';
 import { AppRegistry, Platform } from 'react-native';
 import mobileAds from 'react-native-google-mobile-ads';
-import changeNavigationBarColor from 'react-native-navigation-bar-color';
 import { SafeAreaProvider } from 'react-native-safe-area-context';
 import { enableScreens } from 'react-native-screens';
 import { showSplash } from 'react-native-splash-view';
@@ -25,10 +24,6 @@ const Root = ({ isHeadless }) => {
   dayjs.locale('ko');
   dayjs.extend(isSameOrAfter);
   dayjs.extend(relativeTime);
-
-  if (Platform.OS === 'android') {
-    changeNavigationBarColor('transparent', true);
-  }
 
   useEffect(() => {
     (async () => {

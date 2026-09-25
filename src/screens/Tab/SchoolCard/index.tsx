@@ -7,8 +7,8 @@ import Container from '@/components/Container';
 import { useAuth } from '@/contexts/AuthContext';
 import { useTheme } from '@/contexts/ThemeContext';
 import { showToast } from '@/lib/toast';
-import DeviceBrightness from '@adrianso/react-native-device-brightness';
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import { getBrightnessLevel, setBrightnessLevel } from '@reeq/react-native-device-brightness';
 import { getAnalytics, logEvent } from '@react-native-firebase/analytics';
 import FontAwesome6 from '@react-native-vector-icons/fontawesome6';
 import { useIsFocused } from '@react-navigation/native';
@@ -154,9 +154,8 @@ const SchoolCard = () => {
     if (isNewStudent) return;
 
     try {
-      const currentBrightness = await DeviceBrightness.getBrightnessLevel();
-      setOriginalBrightness(currentBrightness);
-      await DeviceBrightness.setBrightnessLevel(1);
+      setOriginalBrightness(getBrightnessLevel());
+      setBrightnessLevel(1);
       setIsModalVisible(true);
     } catch (error) {
       console.error('Error adjusting brightness:', error);
@@ -166,7 +165,7 @@ const SchoolCard = () => {
   const handleCloseModal = useCallback(async () => {
     try {
       if (originalBrightness !== null) {
-        await DeviceBrightness.setBrightnessLevel(originalBrightness);
+        setBrightnessLevel(originalBrightness);
       }
       setIsModalVisible(false);
     } catch (error) {

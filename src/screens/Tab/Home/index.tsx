@@ -4,7 +4,6 @@ import React, { Fragment, useCallback, useEffect, useRef, useState } from 'react
 import { AppState, BackHandler, Keyboard, Platform, RefreshControl, Text, ToastAndroid, TouchableOpacity, View } from 'react-native';
 import DraggableFlatList, { OpacityDecorator, RenderItemParams, ScaleDecorator } from 'react-native-draggable-flatlist';
 import { trigger } from 'react-native-haptic-feedback';
-import Midnight from 'react-native-midnight';
 
 import { styles as s } from './styles';
 import { getTimetable } from '@/api';
@@ -16,6 +15,7 @@ import Container from '@/components/Container';
 import { ScheduleCard, MealCard, TimetableCard, ScheduleCardRef, MealCardRef, TimetableCardRef } from '@/screens/Tab/Home/components';
 import { useTheme } from '@/contexts/ThemeContext';
 import { useUser } from '@/contexts/UserContext';
+import { useMidnight } from '@/hooks/useMidnight';
 import { useScrollToTop } from '@/hooks/useScrollToTop';
 import { clearCache } from '@/lib/cache';
 import { showToast } from '@/lib/toast';
@@ -154,12 +154,7 @@ const Home = ({ setScrollRef }: { setScrollRef?: (ref: any) => void }) => {
   }, [navigation, classChangedTrigger, setClassChangedTrigger, refreshAllData]);
 
   // 매일 자정마다 데이터를 갱신
-  useEffect(() => {
-    const listener = Midnight.addListener(() => {
-      refreshAllData();
-    });
-    return () => listener.remove();
-  }, [refreshAllData]);
+  useMidnight(refreshAllData);
 
   // 앱이 백그라운드에서 포그라운드로 돌아올 때 데이터를 갱신
   useEffect(() => {

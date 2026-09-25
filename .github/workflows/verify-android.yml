@@ -176,15 +176,10 @@ jobs:
         shell: bash
         run: |
           set -euo pipefail
-          grep -q 'namespace "com.thebylito.navigationbarcolor"' node_modules/react-native-navigation-bar-color/android/build.gradle
-          grep -q 'namespace "com.reactnativemidnight"' node_modules/react-native-midnight/android/build.gradle
-          grep -q 'namespace "org.capslock.RNDeviceBrightness"' node_modules/@adrianso/react-native-device-brightness/android/build.gradle
-          grep -q 'compileSdkVersion rootProject.ext.compileSdkVersion' node_modules/@adrianso/react-native-device-brightness/android/build.gradle
           grep -q 'namespace "io.xogus.reactnative.versioncheck"' node_modules/react-native-version-check/android/build.gradle
           grep -q 'namespace "com.BV.LinearGradient"' node_modules/react-native-linear-gradient/android/build.gradle
           grep -q "proguard-android-optimize.txt" node_modules/react-native-date-picker/android/build.gradle
-          grep -q 'org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlin_version' node_modules/react-native-midnight/android/build.gradle
-          if grep -q 'package=' node_modules/react-native-navigation-bar-color/android/src/main/AndroidManifest.xml node_modules/react-native-midnight/android/src/main/AndroidManifest.xml node_modules/@adrianso/react-native-device-brightness/android/src/main/AndroidManifest.xml node_modules/react-native-version-check/android/src/main/AndroidManifest.xml node_modules/react-native-linear-gradient/android/src/main/AndroidManifest.xml node_modules/react-native-date-picker/android/src/main/AndroidManifest.xml; then exit 1; fi
+          if grep -q 'package=' node_modules/react-native-version-check/android/src/main/AndroidManifest.xml node_modules/react-native-linear-gradient/android/src/main/AndroidManifest.xml node_modules/react-native-date-picker/android/src/main/AndroidManifest.xml; then exit 1; fi
           if grep -q 'proguard-android.txt' node_modules/react-native-date-picker/android/build.gradle; then exit 1; fi
           bun run test -- --runInBand
           ./node_modules/.bin/tsc --noEmit -p .

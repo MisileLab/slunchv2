@@ -142,12 +142,13 @@ jest.mock('@react-native-camera-roll/camera-roll', () => ({
     saveAsset: jest.fn(() => Promise.reject(new Error('Unexpected native call in onboarding smoke: CameraRoll.saveAsset'))),
   },
 }));
-jest.mock('@adrianso/react-native-device-brightness', () => ({
-  getBrightnessLevel: jest.fn(() => Promise.reject(new Error('Unexpected native call in onboarding smoke: brightness.getBrightnessLevel'))),
-  setBrightnessLevel: jest.fn(() => Promise.reject(new Error('Unexpected native call in onboarding smoke: brightness.setBrightnessLevel'))),
-}));
-jest.mock('react-native-midnight', () => ({
-  addListener: jest.fn(() => ({ remove: jest.fn() })),
+jest.mock('@reeq/react-native-device-brightness', () => ({
+  getBrightnessLevel: jest.fn(() => {
+    throw new Error('Unexpected native call in onboarding smoke: brightness.getBrightnessLevel');
+  }),
+  setBrightnessLevel: jest.fn(() => {
+    throw new Error('Unexpected native call in onboarding smoke: brightness.setBrightnessLevel');
+  }),
 }));
 jest.mock('@sayem314/react-native-keep-awake', () => ({
   activateKeepAwake: jest.fn(),
@@ -204,7 +205,9 @@ jest.mock('react-native-tracking-transparency', () => ({
   getTrackingStatus: jest.fn(async () => 'unavailable'),
   requestTrackingPermission: jest.fn(async () => 'unavailable'),
 }));
-jest.mock('react-native-navigation-bar-color', () => jest.fn());
+jest.mock('@zoontek/react-native-navigation-bar', () => ({
+  NavigationBar: () => null,
+}));
 jest.mock('react-native-svg', () => require('./test/fixtures/svg'));
 
 const AsyncStorage = require('@react-native-async-storage/async-storage').default;
