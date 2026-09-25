@@ -101,5 +101,13 @@
   },
   "engines": {
     "node": ">=18"
+  },
+  "patchedDependencies": {
+    "react-native-midnight@1.0.2": "patches/react-native-midnight@1.0.2.patch",
+    "@adrianso/react-native-device-brightness@1.2.7": "patches/@adrianso%2Freact-native-device-brightness@1.2.7.patch",
+    "react-native-version-check@3.5.0": "patches/react-native-version-check@3.5.0.patch",
+    "react-native-linear-gradient@2.8.3": "patches/react-native-linear-gradient@2.8.3.patch",
+    "react-native-date-picker@5.0.13": "patches/react-native-date-picker@5.0.13.patch",
+    "react-native-navigation-bar-color@2.0.2": "patches/react-native-navigation-bar-color@2.0.2.patch"
   }
 }

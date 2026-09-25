@@ -1,0 +1,42 @@
+diff --git a/android/build.gradle b/android/build.gradle
+index 09f34f33d10889dc34b9d15adcbb998c9ba55ec3..c747bc72efb84a744948874ede18531c73b2b7ec 100644
+--- a/android/build.gradle
++++ b/android/build.gradle
+@@ -4,11 +4,10 @@ buildscript {
+ 
+   repositories {
+     google()
+-    jcenter()
++    mavenCentral()
+   }
+ 
+   dependencies {
+-    classpath 'com.android.tools.build:gradle:3.2.1'
+     // noinspection DifferentKotlinGradleVersion
+     classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlin_version"
+   }
+@@ -26,6 +25,7 @@ def getExtOrIntegerDefault(name) {
+ }
+ 
+ android {
++  namespace "com.reactnativemidnight"
+   compileSdkVersion getExtOrIntegerDefault('compileSdkVersion')
+   buildToolsVersion getExtOrDefault('buildToolsVersion')
+   defaultConfig {
+@@ -52,7 +52,6 @@ android {
+ 
+ repositories {
+   mavenCentral()
+-  jcenter()
+   google()
+ 
+   def found = false
+diff --git a/android/src/main/AndroidManifest.xml b/android/src/main/AndroidManifest.xml
+index 1543478e48e19908051f89cd6206720fb7fbed41..a2f47b6057db70071e9080281db29d78ac165e66 100644
+--- a/android/src/main/AndroidManifest.xml
++++ b/android/src/main/AndroidManifest.xml
+@@ -1,3 +1,2 @@
+-<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+-          package="com.reactnativemidnight">
++<manifest xmlns:android="http://schemas.android.com/apk/res/android">
+ </manifest>
