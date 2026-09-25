@@ -17,7 +17,6 @@ import 'dayjs/locale/ko';
 import isSameOrAfter from 'dayjs/plugin/isSameOrAfter';
 import relativeTime from 'dayjs/plugin/relativeTime';
 
-global.RNFB_SILENCE_MODULAR_DEPRECATION_WARNINGS = true;
 
 const Root = ({ isHeadless }) => {
   showSplash();
