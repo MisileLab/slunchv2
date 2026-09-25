@@ -1,7 +1,7 @@
 import { ANDROID_HOME_BANNER_AD_UNIT_ID, IOS_HOME_BANNER_AD_UNIT_ID } from '@env';
-import dayjs from 'dayjs';
+
 import React, { Fragment, useCallback, useEffect, useRef, useState } from 'react';
-import { AppState, BackHandler, Button, Keyboard, Platform, RefreshControl, Text, ToastAndroid, TouchableOpacity, View } from 'react-native';
+import { AppState, BackHandler, Keyboard, Platform, RefreshControl, Text, ToastAndroid, TouchableOpacity, View } from 'react-native';
 import DraggableFlatList, { OpacityDecorator, RenderItemParams, ScaleDecorator } from 'react-native-draggable-flatlist';
 import { trigger } from 'react-native-haptic-feedback';
 import Midnight from 'react-native-midnight';
@@ -22,8 +22,7 @@ import { showToast } from '@/lib/toast';
 import { RootStackParamList } from '@/navigation/RootStacks';
 import { Timetable } from '@/types/api';
 import BottomSheet, { BottomSheetBackdrop, BottomSheetTextInput, BottomSheetView } from '@gorhom/bottom-sheet';
-import AsyncStorage from '@react-native-async-storage/async-storage';
-import analytics from '@react-native-firebase/analytics';
+import { getAnalytics, logEvent } from '@react-native-firebase/analytics';
 import FontAwesome6 from '@react-native-vector-icons/fontawesome6';
 import { NavigationProp, useFocusEffect, useNavigation } from '@react-navigation/native';
 import 'dayjs/locale/ko';
@@ -94,7 +93,7 @@ const Home = ({ setScrollRef }: { setScrollRef?: (ref: any) => void }) => {
   }, [refreshAllData]);
 
   useEffect(() => {
-    analytics().logScreenView({ screen_name: '홈', screen_class: 'Home' });
+    logEvent(getAnalytics(), 'screen_view', { screen_name: '홈', screen_class: 'Home' });
   }, []);
 
   // Android 뒤로가기 버튼 처리
@@ -265,7 +264,7 @@ const Home = ({ setScrollRef }: { setScrollRef?: (ref: any) => void }) => {
         </ScaleDecorator>
       );
     },
-    [theme, typography],
+    [theme, typography, setCardOrder],
   );
 
   const renderBackdrop = useCallback(
@@ -321,7 +320,7 @@ const Home = ({ setScrollRef }: { setScrollRef?: (ref: any) => void }) => {
       timetableCardRef.current?.setTimetable(newTimetable);
       setSelectedSubject({ ...original, userChanged: false });
       showToast('원래 시간표로 되돌렸어요.');
-    } catch (e) {
+    } catch {
       showToast('원래 시간표를 불러오지 못했어요.');
     }
   }, [selectedSubjectIndices, schoolInfo.comciganCode, classInfo.grade, classInfo.class]);
